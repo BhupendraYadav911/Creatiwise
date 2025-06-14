@@ -28,7 +28,7 @@ const Experience = () => {
     <div className="experienceContainer py-16 px-6 sm:px-10 lg:px-[10%] flex flex-col gap-8 text-white">
       {/* Section Title */}
       <h3 className="syne-text font-semibold text-[32px] sm:text-[40px] flex items-center gap-2">
-        <img alt="star-icon" src="/assets/Star.svg" loading="lazy" width="32" height="32" />
+        <img alt="star-icon" src="/assets/star.svg" loading="lazy" width="32" height="32" />
         Experience
       </h3>
 

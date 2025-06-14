@@ -47,7 +47,7 @@ const Home = () => {
         {/* Companies + Description */}
         <div className="flex flex-col lg:flex-row justify-between gap-8 w-full max-w-6xl">
           {/* Companies */}
-          <div className="flex items-center justify-center lg:justify-start gap-8 flex-wrap flex-1">
+          <div className="flex items-center justify-center lg:justify-start lg:gap-24 gap-8 flex-wrap flex-1">
             {portfolioData.companies.map((company, idx) => (
               <div key={idx} className="flex items-center gap-2 text-base sm:text-lg text-[#CBCBCB]">
                 <img src={company.icon} alt={`${company.name}-icon`} className="h-[24px] sm:h-[28px] w-auto" />

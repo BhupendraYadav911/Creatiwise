@@ -3,7 +3,7 @@ import React from 'react';
 const Expertise = () => {
   const expertiseData = {
     title: "Expertise",
-    icon: "/assets/Star.svg",
+    icon: "/assets/star.svg",
     items: [
       {
         title: "Branding",

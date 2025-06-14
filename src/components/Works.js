@@ -3,7 +3,7 @@ import React from 'react';
 const Works = () => {
   const worksData = {
     title: 'Works',
-    icon: '/assets/Star.svg',
+    icon: '/assets/star.svg',
     viewAllText: 'View All',
     items: [
       {

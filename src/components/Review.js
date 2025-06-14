@@ -44,7 +44,7 @@ const Reviews = () => {
     <div className="reviewContainer bg-[#010208] text-white py-16 px-6 sm:px-10 lg:px-[10%] flex flex-col gap-12">
       {/* Section Heading */}
       <h2 className="syne-text font-semibold text-3xl sm:text-[40px] flex items-center gap-3">
-        <img src="/assets/Star.svg" alt="star" width={32} height={32} />
+        <img src="/assets/star.svg" alt="star" width={32} height={32} />
         What they say
       </h2>
 

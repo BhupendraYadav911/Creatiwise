@@ -3,7 +3,7 @@ import React from 'react';
 const Blog = () => {
   const blogData = {
     title: 'Blog',
-    icon: '/assets/Star.svg',
+    icon: '/assets/star.svg',
     viewAllText: 'View All',
     posts: [
       {
