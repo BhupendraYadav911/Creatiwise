@@ -8,20 +8,51 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // On mount: check login state and user
+  // useEffect(() => {
+  //   const storedUser = JSON.parse(localStorage.getItem('loggedInUser'));
+  //   if (storedUser) {
+  //     setIsLoggedIn(true);
+  //     setLoggedInUser(storedUser);
+  //   }
+  // }, []);
+
   useEffect(() => {
+  const updateAuthState = () => {
     const storedUser = JSON.parse(localStorage.getItem('loggedInUser'));
     if (storedUser) {
       setIsLoggedIn(true);
       setLoggedInUser(storedUser);
+    } else {
+      setIsLoggedIn(false);
+      setLoggedInUser(null);
     }
-  }, []);
+  };
+
+  updateAuthState(); // Initial check
+  window.addEventListener('authChange', updateAuthState); // Listen for login/logout
+
+  return () => {
+    window.removeEventListener('authChange', updateAuthState); // Cleanup
+  };
+}, []);
+
+  // const handleLogout = () => {
+  //   localStorage.removeItem('loggedInUser');
+  //   setIsLoggedIn(false);
+  //   setLoggedInUser(null);
+  //   navigate('/');
+  // };
 
   const handleLogout = () => {
-    localStorage.removeItem('loggedInUser');
-    setIsLoggedIn(false);
-    setLoggedInUser(null);
-    navigate('/');
-  };
+  localStorage.removeItem('loggedInUser');
+  setIsLoggedIn(false);
+  setLoggedInUser(null);
+
+  window.dispatchEvent(new Event('authChange')); // 🔥 Notify all components
+
+  navigate('/');
+};
+
 
   const getInitials = (name) => {
     if (!name) return '';
@@ -105,33 +136,41 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#010208] p-6 flex flex-col gap-4 text-white md:hidden z-50">
-          {isLoggedIn ? (
-            <div
-              onClick={() => { navigate('/profile-wizard'); setIsOpen(false); }}
-              className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-semibold cursor-pointer hover:opacity-80 transition-all"
-              title="Go to Profile Builder"
+     {isOpen && (
+  <div className="absolute top-full left-0 w-full overflow-y-auto bg-[#010208] p-6 flex flex-col gap-4 text-white md:hidden z-50">
+    {isLoggedIn ? (
+    
+        <label
+              onClick={() => navigate('/profile-wizard')}
+              className={`syne-text py-2 px-4 rounded-3xl text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer`}
             >
-              {getInitials(loggedInUser?.name)}
-            </div>
-          ) : (
-            <a href="#home" onClick={() => setIsOpen(false)}>Home</a>
-          )}
-          <a href="#about" onClick={() => setIsOpen(false)}>About</a>
-          <a href="#projects" onClick={() => setIsOpen(false)}>Projects</a>
-          <a href="#contact" onClick={() => setIsOpen(false)}>Contact</a>
+              Profile Wizard
+            </label>
+    ) : (
+      <a
+        href="#home"
+        onClick={() => setIsOpen(false)}
+        className="py-2 px-4 hover:bg-white hover:text-black rounded-3xl rounded transition-all"
+      >
+        Home
+      </a>
+    )}
 
-          {!isLoggedIn ? (
-            <>
-              <button onClick={() => { navigate('/login'); setIsOpen(false); }}>Login</button>
-              <button onClick={() => { navigate('/signup'); setIsOpen(false); }}>Sign Up</button>
-            </>
-          ) : (
-            <button onClick={() => { handleLogout(); setIsOpen(false); }}>Logout</button>
-          )}
-        </div>
-      )}
+    <a href="#about" onClick={() => setIsOpen(false)} className="py-2 px-4 hover:bg-white hover:text-black rounded rounded-3xl transition-all">About</a>
+    <a href="#projects" onClick={() => setIsOpen(false)} className="py-2 px-4 hover:bg-white hover:text-black rounded rounded-3xl transition-all">Projects</a>
+    <a href="#contact" onClick={() => setIsOpen(false)} className="py-2 px-4 hover:bg-white hover:text-black rounded rounded-3xl transition-all">Contact</a>
+
+    {!isLoggedIn ? (
+      <>
+        <button onClick={() => { navigate('/login'); setIsOpen(false); }} className="py-2 px-4 bg-transparent border border-white rounded rounded-3xl hover:bg-white hover:text-black transition-all">Login</button>
+        <button onClick={() => { navigate('/signup'); setIsOpen(false); }} className="py-2 px-4 bg-transparent border border-white rounded rounded-3xl hover:bg-white hover:text-black transition-all">Sign Up</button>
+      </>
+    ) : (
+      <button onClick={() => { handleLogout(); setIsOpen(false); }} className="py-2 px-4 bg-red-600 rounded rounded-3xl hover:bg-red-700 transition-all">Logout</button>
+    )}
+  </div>
+)}
+
     </nav>
   );
 };

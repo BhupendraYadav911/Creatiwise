@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
@@ -56,7 +56,7 @@ const handleSubmit = (e) => {
     
     // ✅ Save logged-in user to localStorage
     localStorage.setItem('loggedInUser', JSON.stringify(matchedUser));
-    
+     window.dispatchEvent(new Event('authChange'));
     navigate('/');
   } else {
     setErrors({ password: 'Invalid email or password' });
